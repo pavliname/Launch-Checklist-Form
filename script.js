@@ -1,5 +1,22 @@
 window.addEventListener("load", function(){
-
+  let json = [];
+  fetch("https://handlers.education.launchcode.org/static/planets.json").then(function(response) {
+     response.json().then(function(json) {
+        let missionTarget = document.getElementById("missionTarget");
+        let index = Math.floor(Math.random()*json.length);
+           missionTarget.innerHTML = `
+           <h2>Mission Destination</h2>
+           <ol>
+              <li>Name: ${json[index].name}</li>
+              <li>Diameter: ${json[index].diameter}</li>
+              <li>Star: ${json[index].star}</li>
+              <li>Distance from Earth: ${json[index].distance}</li>
+              <li>Number of Moons: ${json[index].moons}</li>
+           </ol>
+           <img src="${json[index].image}">
+           `;
+     });
+            });
   let form = document.querySelector("form");
 form.addEventListener("submit", function(event){
 
@@ -21,7 +38,7 @@ form.addEventListener("submit", function(event){
 
   // check the submitted information is of a correct data type
     if ((!isNaN(pilotName.value)) || (!isNaN(copilotName.value)) || (isNaN(fuelLevel.value))|| (isNaN(cargoMass.value))){
-      alert("Please double check submitted information. Pilot Name and Co-pilot Name need to be strings, Fuel Level and Cargo Mass need to be numbers!");
+      alert("Make sure to enter valid information for each field!");
       event.preventDefault();
     } else {
 
@@ -59,15 +76,3 @@ form.addEventListener("submit", function(event){
 });
 
 });
-
-/* This block of code shows how to format the HTML once you fetch some planetary JSON!
-<h2>Mission Destination</h2>
-<ol>
-   <li>Name: ${}</li>
-   <li>Diameter: ${}</li>
-   <li>Star: ${}</li>
-   <li>Distance from Earth: ${}</li>
-   <li>Number of Moons: ${}</li>
-</ol>
-<img src="${}">
-*/
